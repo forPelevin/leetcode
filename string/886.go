@@ -1,9 +1,6 @@
 package string
 
-import (
-	"strconv"
-	"strings"
-)
+import "bytes"
 
 //https://leetcode.com/explore/interview/card/top-interview-questions-easy/127/strings/886/
 //The count-and-say sequence is the sequence of integers with the first five terms as following:
@@ -35,4 +32,21 @@ import (
 //Explanation: For n = 3 the term was "21" in which we have two groups "2" and "1", "2" can be read as "12
 
 func countAndSay(n int) string {
+	buf := bytes.NewBufferString("1")
+	for n > 1 {
+		subBuf := bytes.NewBuffer(make([]byte, 0, 100))
+		bs := buf.Bytes()
+		for i := 0; i < len(bs); i++ {
+			count := 1
+			for i+1 < len(bs) && bs[i] == bs[i+1] {
+				i++
+				count++
+			}
+			subBuf.WriteByte(byte(count) + '0')
+			subBuf.WriteByte(bs[i])
+		}
+		buf = subBuf
+		n--
+	}
+	return buf.String()
 }
