@@ -15,4 +15,30 @@ package sortingsearching
 //
 //Output: [1,2,2,3,5,6]
 func merge(nums1 []int, m int, nums2 []int, n int) {
+	m--
+	n--
+	ind := len(nums1)-1
+	for ind >= 0 {
+		if m < 0 {
+			nums1[ind] = nums2[n]
+			n--
+			ind--
+			continue
+		}
+		if n < 0 {
+			nums1[ind] = nums1[m]
+			m--
+			ind--
+			continue
+		}
+		if nums1[m] > nums2[n] {
+			nums1[ind] = nums1[m]
+			m--
+			ind--
+			continue
+		}
+		nums1[ind] = nums2[n]
+		n--
+		ind--
+	}
 }
